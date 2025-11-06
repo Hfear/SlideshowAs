@@ -41,8 +41,8 @@ fun SlideshowLayout(modifier: Modifier = Modifier) {
     val images = listOf(
         SlideImage(R.drawable.city, R.string.caption_city),
         SlideImage(R.drawable.train, R.string.caption_train),
-        //SlideImage(R.drawable.crow, R.string.caption_crow),
-       // SlideImage(R.drawable.kitchen, R.string.caption_kitchen),
+        SlideImage(R.drawable.crow, R.string.caption_crow),
+        SlideImage(R.drawable.kitchen, R.string.caption_kitchen),
         SlideImage(R.drawable.trees, R.string.caption_trees)
     )
 
