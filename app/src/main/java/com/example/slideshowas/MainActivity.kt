@@ -4,21 +4,18 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
@@ -36,23 +33,20 @@ class MainActivity : ComponentActivity() {
 
 data class SlideImage(
     val imageRes: Int,
-    val caption: String
+    @StringRes val captionRes: Int
 )
 
 @Composable
 fun SlideshowLayout(modifier: Modifier = Modifier) {
-    // Replace these with your actual drawable resource IDs
     val images = listOf(
-        SlideImage(R.drawable.city, "city of the dead"),
-        SlideImage(R.drawable.train, "sky train"),
-        SlideImage(R.drawable.crow, "crow island"),
-        SlideImage(R.drawable.kitchen, "iso kitchen"),
-        SlideImage(R.drawable.trees, "green trees")
+        SlideImage(R.drawable.city, R.string.caption_city),
+        SlideImage(R.drawable.train, R.string.caption_train),
+        //SlideImage(R.drawable.crow, R.string.caption_crow),
+       // SlideImage(R.drawable.kitchen, R.string.caption_kitchen),
+        SlideImage(R.drawable.trees, R.string.caption_trees)
     )
 
     var currentIndex by remember { mutableStateOf(0) }
-    var numberInput by remember { mutableStateOf("") }
-    val focus = LocalFocusManager.current
 
     Column(
         modifier = modifier
@@ -64,7 +58,7 @@ fun SlideshowLayout(modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = "Image Slideshow",
+            text = stringResource(R.string.app_title),
             style = MaterialTheme.typography.headlineSmall,
             modifier = Modifier
                 .align(Alignment.Start)
@@ -81,7 +75,7 @@ fun SlideshowLayout(modifier: Modifier = Modifier) {
         ) {
             Image(
                 painter = painterResource(id = images[currentIndex].imageRes),
-                contentDescription = images[currentIndex].caption,
+                contentDescription = stringResource(images[currentIndex].captionRes),
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop
             )
@@ -89,14 +83,14 @@ fun SlideshowLayout(modifier: Modifier = Modifier) {
 
         // Caption
         Text(
-            text = images[currentIndex].caption,
+            text = stringResource(images[currentIndex].captionRes),
             style = MaterialTheme.typography.titleMedium,
             modifier = Modifier.padding(bottom = 24.dp)
         )
 
         // Image counter
         Text(
-            text = "Image ${currentIndex + 1} of ${images.size}",
+            text = stringResource(R.string.image_counter, currentIndex + 1, images.size),
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier.padding(bottom = 16.dp)
         )
@@ -118,7 +112,7 @@ fun SlideshowLayout(modifier: Modifier = Modifier) {
                 },
                 modifier = Modifier.weight(1f)
             ) {
-                Text(text = "Back")
+                Text(text = stringResource(R.string.button_back))
             }
 
             Spacer(modifier = Modifier.width(16.dp))
@@ -133,53 +127,7 @@ fun SlideshowLayout(modifier: Modifier = Modifier) {
                 },
                 modifier = Modifier.weight(1f)
             ) {
-                Text(text = "Next")
-            }
-        }
-
-        // Jump to image section
-        Text(
-            text = "Jump to Image",
-            style = MaterialTheme.typography.titleMedium,
-            modifier = Modifier
-                .align(Alignment.Start)
-                .padding(bottom = 8.dp)
-        )
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 32.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            TextField(
-                value = numberInput,
-                onValueChange = { numberInput = it },
-                modifier = Modifier.weight(1f),
-                label = { Text(text = "Image Number (1-${images.size})") },
-                singleLine = true,
-                keyboardOptions = KeyboardOptions.Default.copy(
-                    keyboardType = KeyboardType.Number,
-                    imeAction = ImeAction.Done
-                ),
-                keyboardActions = KeyboardActions(onDone = {
-                    focus.clearFocus()
-                })
-            )
-
-            Spacer(modifier = Modifier.width(16.dp))
-
-            Button(
-                onClick = {
-                    val imageNumber = numberInput.toIntOrNull() ?: 0
-                    if (imageNumber in 1..images.size) {
-                        currentIndex = imageNumber - 1
-                        numberInput = ""
-                    }
-                    focus.clearFocus()
-                }
-            ) {
-                Text(text = "Go")
+                Text(text = stringResource(R.string.button_next))
             }
         }
 

@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">SlideshowAs</string>
+    <string name="app_title">My PC Background Image Slideshow</string>
+    <string name="button_back">Back</string>
+    <string name="button_next">Next</string>
+    <string name="image_counter">Image %1$d of %2$d</string>
+    <string name="caption_city">city of the dead</string>
+    <string name="caption_train">sky train</string>
+    <string name="caption_crow">crow island</string>
+    <string name="caption_kitchen">iso kitchen</string>
+    <string name="caption_trees">green trees</string>
 </resources>
